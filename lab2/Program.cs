@@ -9,10 +9,14 @@
             Console.ResetColor();
 
             Student Oleg = new("Олег Приколов", 13);
+            Oleg.FavoriteGame = new("Sonic Adventure", 1999, "Sonic Team");
+            Oleg.FavoriteSubject = new("Основы веб-программирования");
             Oleg.WriteInfo();
 
             Student Masha = new("Мария Цареградцева");
             Masha.WriteInfo();
+            Masha.FavoriteGame = new("Sonic Generations", 2011, "Sonic Team");
+            Masha.FavoriteSubject = new("Математика");
 
             Oleg.BecomeOlder();
             Console.WriteLine($"У студента {Oleg.returnStudentName} сегодня День Рождения! Ему исполняется {Oleg.Age}! \n");
@@ -22,7 +26,22 @@
             Console.WriteLine($"Теперь к вопросам второй лабы\n");
             Console.ResetColor();
 
-            Game SonicAdventure = new("Sonic Adventure", 1999, "Sonic Team");
+            Console.ForegroundColor = ConsoleColor.Blue;
+
+            Oleg.returnFavoriteGame();
+            Oleg.returnFavoriteSubject();
+
+            Masha.returnFavoriteGame();
+            Masha.returnFavoriteSubject();
+
+            Console.ResetColor();
+
+            //Game SonicAdventure = new("Sonic Adventure", 1999, "Sonic Team");
+            //Game SonicGenerations = new("Sonic Generations", 2011, "Sonic Team");
+            //Game SonicHeroes = new("Sonic Heroes", 2004, "Sonic Team");
+            //Game SonicRiders = new("Sonic Riders", 2006, "Sonic Team");
+
+
         }
 
         class Student
@@ -59,6 +78,9 @@
                 this.Age = Age;
             }
 
+            public Subject FavoriteSubject { get; set; }
+            public Game FavoriteGame { get; set; }
+
             public void BecomeOlder()
             {
                 Age++;
@@ -84,6 +106,17 @@
                 }
             }
 
+            public void returnFavoriteGame()
+            {
+                Console.WriteLine($"Любимая игра студента {_name} - {FavoriteGame.gameName}\n" +
+                    $"Год релиза: {FavoriteGame.yearOfRelease}\n" +
+                    $"Разработчик: {FavoriteGame.developerName}\n");
+            }
+
+            public void returnFavoriteSubject()
+            {
+                Console.WriteLine($"Любимая предмет студента {_name} - {FavoriteSubject.subjectName}\n");
+            }
         }
 
         class Subject
