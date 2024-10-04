@@ -78,6 +78,8 @@
                 this.Age = Age;
             }
 
+            //Методы возвращающие любимые игру и предмет студента
+
             public Subject FavoriteSubject { get; set; }
             public Game FavoriteGame { get; set; }
 
@@ -129,11 +131,14 @@
             }
         }
 
+        //создаём новый класс Game
         class Game
         {
             public string gameName { get; set; }
             public int yearOfRelease { get; private set; }
             public string? developerName { get; set; }
+
+            //используем 2 конструктора, чтобы сделать поле developerName необязательным
 
             public Game(string gameName, int yearOfRelease, string developerName) 
             { 

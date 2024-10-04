@@ -4,58 +4,94 @@
     {
         static void Main(string[] args)
         {
-            Student Oleg = new("Олег Приколов", 13);
+            // Использование инициализатора для создания объекта
+            Student Oleg = new Student { Name = "Олег Приколов", Age = 13 };
             Oleg.WriteInfo();
 
-            Student Masha = new("Мария Цареградцева");
+            // Использование конструктора с двумя параметрами
+            Student Masha = new("Мария Цареградцева", 20);
             Masha.WriteInfo();
 
-            Oleg.BecomeOlder();
-            Console.WriteLine($"У студента {Oleg.returnStudentName} сегодня День Рождения! Ему исполняется {Oleg.Age}! \n");
-            Oleg.WriteInfo();
+            // Создание объекта с использованием статического поля
+            Console.WriteLine($"Количество студентов: {Student.StudentCount}");
+
+            // Использование статического метода
+            Student.DisplayTotalStudents();
+
+            // Создание объекта с инициализатором
+            Student Ivan = new Student { Name = "Иван Иванов", Age = 18 };
+            Ivan.WriteInfo();
+
+            // Использование конструктора по умолчанию
+            Student studentWithDefaultValues = new Student();
+            studentWithDefaultValues.WriteInfo();
+        }
+    }
+
+    public class Student
+    {
+        // Закрытое поле
+        private string _name;
+
+        // Публичные свойства
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
         }
 
-        class Student
+        public int Age { get; set; }
+
+        // Статическое поле для подсчета количества студентов
+        public static int StudentCount { get; private set; }
+
+        // Статический конструктор для инициализации статического поля
+        static Student()
         {
-            private string _name { get; set; }
+            StudentCount = 0;
+        }
 
-            public int Age { get; private set; }
+        // Конструктор по умолчанию
+        public Student()
+        {
+            _name = "Неизвестный студент";
+            Age = 0;
+            StudentCount++;
+        }
 
-            public Student(string _name)
-            {
-                this._name = _name;
-            }
+        // Конструктор с одним параметром
+        public Student(string name)
+        {
+            _name = name;
+            Age = 0;
+            StudentCount++;
+        }
 
-            public Student(string _name, int Age)
-            {
-                this._name = _name;
-                this.Age = Age;
-            }
+        // Конструктор с двумя параметрами
+        public Student(string name, int age)
+        {
+            _name = name;
+            Age = age;
+            StudentCount++;
+        }
 
-            public void BecomeOlder()
-            {
-                Age++;
-            }
+        // Статический метод для вывода информации о количестве студентов
+        public static void DisplayTotalStudents()
+        {
+            Console.WriteLine($"Общее количество студентов: {StudentCount}");
+        }
 
-            public string returnStudentName
-            {
-                get => _name;
-            }
-            public void WriteInfo()
-            {
-                if (Age == 0)
-                {
-                    Console.WriteLine($"Имя студента: {_name} \n" +
-                    $"Возраст студента: Неизвестен \n");
-                }
+        // Деструктор (финализатор)
+        ~Student()
+        {
+            Console.WriteLine($"Студент {_name} удален из памяти.");
+        }
 
-                else
-                {
-                    Console.WriteLine($"Имя студента: {_name} \n" +
-                    $"Возраст студента: {Age} \n");
-                }
-            }
-
+        // Метод для вывода информации о студенте
+        public void WriteInfo()
+        {
+            Console.WriteLine($"Имя студента: {_name}\nВозраст студента: {Age}\n");
         }
     }
 }
+
