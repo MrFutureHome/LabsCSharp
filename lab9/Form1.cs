@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
+using System.Xml;
+using Newtonsoft.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Text.RegularExpressions;
 
 namespace lab9
 {
+
     public partial class Form1 : Form
     {
         private List<Student> students;
@@ -43,16 +49,6 @@ namespace lab9
             {
                 SpecificationName = specificationName;
             }
-        }
-
-        public class Student
-        {
-            public string RecordBook { get; set; }
-            public string FullName { get; set; }
-            public string Department { get; set; }
-            public string Specification { get; set; }
-            public DateTime DateOfAdmission { get; set; }
-            public string Group { get; set; }
         }
 
         private void InitDepartments()
@@ -89,6 +85,76 @@ namespace lab9
 
             // Событие на изменение института, чтобы обновить список направлений
             departmentComboBox.SelectedIndexChanged += departmentComboBox_SelectedIndexChanged;
+        }
+
+        // Экспорт в XML
+        private void ExportToXml(string filePath)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Student>));
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                serializer.Serialize(writer, students);
+            }
+        }
+
+        // Импорт из XML
+        private void ImportFromXml(string filePath)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Student>));
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                students = (List<Student>)serializer.Deserialize(reader);
+            }
+        }
+
+        // Экспорт в CSV
+        private void ExportToCsv(string filePath)
+        {
+            StringBuilder csvContent = new StringBuilder();
+            csvContent.AppendLine("RecordBook,FullName,Department,Specification,DateOfAdmission,Group");
+
+            foreach (var student in students)
+            {
+                csvContent.AppendLine($"{student.RecordBook},{student.FullName},{student.Department},{student.Specification},{student.DateOfAdmission.ToShortDateString()},{student.Group}");
+            }
+
+            File.WriteAllText(filePath, csvContent.ToString());
+        }
+
+        // Импорт из CSV
+        private void ImportFromCsv(string filePath)
+        {
+            string[] csvLines = File.ReadAllLines(filePath);
+            students.Clear();
+
+            for (int i = 1; i < csvLines.Length; i++) // Пропускаем заголовок
+            {
+                string[] data = csvLines[i].Split(',');
+                Student student = new Student
+                {
+                    RecordBook = data[0],
+                    FullName = data[1],
+                    Department = data[2],
+                    Specification = data[3],
+                    DateOfAdmission = DateTime.Parse(data[4]),
+                    Group = data[5]
+                };
+                students.Add(student);
+            }
+        }
+
+        // Экспорт в JSON
+        private void ExportToJson(string filePath)
+        {
+            string json = JsonConvert.SerializeObject(students, Newtonsoft.Json.Formatting.Indented);
+            File.WriteAllText(filePath, json);
+        }
+
+        // Импорт из JSON
+        private void ImportFromJson(string filePath)
+        {
+            string json = File.ReadAllText(filePath);
+            students = JsonConvert.DeserializeObject<List<Student>>(json);
         }
 
         private void UpdateDataGrid()
@@ -177,12 +243,21 @@ namespace lab9
             dateTimePicker1.Value = DateTime.Now;
             groupTextBox.Clear();
         }
+        private bool ValidateRecordBook(string recordBook)
+        {
+            return Regex.IsMatch(recordBook, @"^\d{8}$");
+        }
 
         private bool ValidateStudentInput(out string errorMessage)
         {
             if (string.IsNullOrWhiteSpace(recordBookTextBox.Text))
             {
                 errorMessage = "Номер зачетной книжки не может быть пустым.";
+                return false;
+            }
+            if (!ValidateRecordBook(recordBookTextBox.Text))
+            {
+                errorMessage = "Номер зачетной книжки должен состоять из 8 цифр.";
                 return false;
             }
             if (string.IsNullOrWhiteSpace(fullNameTextBox.Text))
@@ -223,6 +298,64 @@ namespace lab9
                 }
             }
         }
+
+        private void exportButton_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "XML files (*.xml)|*.xml|CSV files (*.csv)|*.csv|JSON files (*.json)|*.json";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = saveFileDialog.FileName;
+                    if (filePath.EndsWith(".xml"))
+                    {
+                        ExportToXml(filePath);
+                    }
+                    else if (filePath.EndsWith(".csv"))
+                    {
+                        ExportToCsv(filePath);
+                    }
+                    else if (filePath.EndsWith(".json"))
+                    {
+                        ExportToJson(filePath);
+                    }
+                }
+            }
+        }
+
+        private void importButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "XML files (*.xml)|*.xml|CSV files (*.csv)|*.csv|JSON files (*.json)|*.json";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = openFileDialog.FileName;
+                    if (filePath.EndsWith(".xml"))
+                    {
+                        ImportFromXml(filePath);
+                    }
+                    else if (filePath.EndsWith(".csv"))
+                    {
+                        ImportFromCsv(filePath);
+                    }
+                    else if (filePath.EndsWith(".json"))
+                    {
+                        ImportFromJson(filePath);
+                    }
+                }
+            }
+            UpdateDataGrid();
+        }
+    }
+    public class Student
+    {
+        public string RecordBook { get; set; }
+        public string FullName { get; set; }
+        public string Department { get; set; }
+        public string Specification { get; set; }
+        public DateTime DateOfAdmission { get; set; }
+        public string Group { get; set; }
     }
 
 }
