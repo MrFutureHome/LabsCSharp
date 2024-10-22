@@ -327,7 +327,7 @@ namespace lab9
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "XML files (*.xml)|*.xml|CSV files (*.csv)|*.csv|JSON files (*.json)|*.json";
+                openFileDialog.Filter = "Все файлы (*.*)|*.*|XML files (*.xml)|*.xml|CSV files (*.csv)|*.csv|JSON files (*.json)|*.json";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string filePath = openFileDialog.FileName;
