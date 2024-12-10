@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lab7", "lab7\lab7.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lab9", "lab9\lab9.csproj", "{868D0C68-7E7B-4A38-B69E-BBD229B44131}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lab10", "..\..\MEGAsync\Учёба\СГУ\3 курс\1 семестр\ООП C#\SQLCarsApp\lab10.csproj", "{F4CDC15E-E487-444C-8E3C-B6B0FFFA0353}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{868D0C68-7E7B-4A38-B69E-BBD229B44131}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{868D0C68-7E7B-4A38-B69E-BBD229B44131}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{868D0C68-7E7B-4A38-B69E-BBD229B44131}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4CDC15E-E487-444C-8E3C-B6B0FFFA0353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4CDC15E-E487-444C-8E3C-B6B0FFFA0353}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4CDC15E-E487-444C-8E3C-B6B0FFFA0353}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4CDC15E-E487-444C-8E3C-B6B0FFFA0353}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
