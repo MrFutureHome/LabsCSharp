@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lab9", "lab9\lab9.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lab10", "SQLCarsApp\lab10.csproj", "{F4CDC15E-E487-444C-8E3C-B6B0FFFA0353}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lab8", "lab8\lab8.csproj", "{D9A1D06D-EA16-42DE-833B-A25E0604350B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{F4CDC15E-E487-444C-8E3C-B6B0FFFA0353}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4CDC15E-E487-444C-8E3C-B6B0FFFA0353}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4CDC15E-E487-444C-8E3C-B6B0FFFA0353}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9A1D06D-EA16-42DE-833B-A25E0604350B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9A1D06D-EA16-42DE-833B-A25E0604350B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9A1D06D-EA16-42DE-833B-A25E0604350B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9A1D06D-EA16-42DE-833B-A25E0604350B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
